@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Персональный блог-портфолио</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header>
+        <h1>Персональный блог-портфолио на Flask</h1>
+    </header>
+
+    <main>
+        <!-- Секция профиля и стека -->
+        <section class="profile-section">
+            <h2>Профессиональный профиль: Разработка на Python</h2>
+            
+            <!-- Изображение из папки static -->
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Фото профиля разработчика" class="profile-image">
+
+                    
+            <p>Данный ресурс представляет собой структурированный отчет о процессе освоения технологий веб-разработки и построения серверной архитектуры. Здесь фиксируются ключевые этапы профессионального роста — от написания базовых скриптов до развертывания комплексных сервисов.</p>
+            
+            <h3>Актуальный технологический стек и фокус компетенций:</h3>
+            <ul>
+                <li><strong>Core Python:</strong> Написание оптимизированного, читаемого кода без избыточных конструкций; глубокое изучение структур данных и базовых алгоритмов.</li>
+                <li><strong>Flask Framework:</strong> Развертывание микросервисов, проектирование архитектуры веб-приложений, настройка маршрутизации и серверной логики.</li>
+                <li><strong>Frontend-база (HTML5 & CSS3):</strong> Проектирование интерфейсов, верстка современных адаптивных страниц с семантической разметкой.</li>
+                <li><strong>Git & GitHub workflow:</strong> Контроль версий, фиксация коммитов, работа с ветками и подготовка пулл-реквестов.</li>
+            </ul>
+        </section>
+
+        <!-- Секция академической успеваемости -->
+        <section class="stats-section">
+            <h2>Мониторинг успеваемости по ключевым дисциплинам</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Показатель / Тема</th>
+                            <th>Тема 1. Основы Flask</th>
+                            <th>Тема 2. HTML & CSS</th>
+                            <th>Тема 3. Шаблоны и формы в Flask</th>
+                            <th>Тема 4. Основы Flask-SQLAlchemy</th>
+                            <th>Тема 5. Авторизация в Flask</th>
+                            <th>Тема 6. Работа с REST API</th>
+                            <th>Тема 7. Итоговый проект</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>% выполнения темы</strong></td>
+                            <td>100%</td>
+                            <td>100%</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>% выполнения ДЗ</strong></td>
+                            <td>100%</td>
+                            <td>100%</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Комментарии к теме</strong></td>
+                            <td>Выполнено в полном объеме</td>
+                            <td>Интерфейс успешно стилизован</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
