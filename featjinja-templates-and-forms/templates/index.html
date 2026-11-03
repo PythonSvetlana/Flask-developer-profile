@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Персональный блог-портфолио</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header>
+        <h1>Персональный блог-портфолио на Flask</h1>
+        <nav class="navigation-menu">
+            <a href="{{ url_for('index') }}" class="nav-link">Главная (Профиль)</a>
+            <a href="{{ url_for('notes') }}" class="nav-link">Дневник программиста</a>
+        </nav>
+    </header>
+
+    <main class="dashboard">
+        {% block content %}
+        
+        <!-- Левая колонка: Профиль разработчика -->
+        <section class="profile-section">
+            <h2>Профессиональный профиль</h2>
+            <div class="profile-header">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Фото профиля" class="profile-image">
+                <p class="profile-desc">Данный ресурс представляет собой структурированный отчет о процессе освоения технологий веб-разработки и построения серверной архитектуры.</p>
+            </div>
+            
+            <h3>Технологический стек:</h3>
+            <ul class="compact-list">
+                <li><strong>Core Python:</strong> Оптимизированный код, структуры данных и базовые алгоритмы.</li>
+                <li><strong>Flask Framework:</strong> Развертывание микросервисов, маршрутизация и серверная логика.</li>
+                <li><strong>Frontend:</strong> Проектирование интерфейсов, адаптивная HTML5/CSS3 верстка.</li>
+                <li><strong>Git & GitHub:</strong> Контроль версий, фиксация коммитов и пулл-реквесты.</li>
+            </ul>
+        </section>
+
+        <!-- Правая колонка: Фиксированная таблица успеваемости -->
+        <section class="stats-section">
+            <h2>Мониторинг успеваемости по дисциплинам</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Показатель / Модуль</th>
+                            {% for topic in topics %}
+                                <!-- Применение фильтра safe для активации тега <br> -->
+                                <th>{{ topic.name | safe }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Строка 1: Прогресс по лекциям -->
+                        <tr>
+                            <td><strong>% темы</strong></td>
+                            {% for topic in topics %}
+                                <td class="{% if topic.status %}completed-cell{% endif %}">{{ topic.progress }}</td>
+                            {% endfor %}
+                        </tr>
+                        <!-- Строка 2: Прогресс по домашним работам -->
+                        <tr>
+                            <td><strong>% ДЗ</strong></td>
+                            {% for topic in topics %}
+                                <td class="{% if topic.status %}completed-cell{% endif %}">{{ topic.hw }}</td>
+                            {% endfor %}
+                        </tr>
+                        <!-- Строка 3: Экспертные комментарии -->
+                        <tr>
+                            <td><strong>Комментарий</strong></td>
+                            {% for topic in topics %}
+                                <td class="{% if topic.status %}completed-cell{% endif %}">{{ topic.comment }}</td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        {% endblock %}
+    </main>
+
+</body>
+</html>

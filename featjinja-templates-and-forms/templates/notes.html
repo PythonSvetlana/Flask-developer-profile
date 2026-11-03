@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<!-- Двухколоночный макет страницы дневника -->
+
+<!-- Левая колонка: Форма ввода (Пункт 04) -->
+<section class="form-section">
+    <h2>Добавление записи в дневник</h2>
+    <form action="{{ url_for('notes') }}" method="POST" class="academic-form">
+        <div class="form-group">
+            <label for="title">Заголовок записи:</label>
+            <input type="text" id="title" name="title" required placeholder="Введите тему заголовка...">
+        </div>
+        
+        <div class="form-group">
+            <label for="content">Текст записи:</label>
+            <textarea id="content" name="content" rows="6" required placeholder="Опишите проделанную работу..."></textarea>
+        </div>
+        
+        <button type="submit" class="submit-button">Зафиксировать запись</button>
+    </form>
+</section>
+
+<!-- Правая колонка: Вывод данных из словаря (Пункт 05) -->
+<section class="notes-display-section">
+    <h2>Хроника записей («Дневник программиста»)</h2>
+    <div class="notes-container">
+        {% if notes %}
+            {% for title, content in notes.items() %}
+                <article class="note-card">
+                    <h3 class="note-title">{{ title }}</h3>
+                    <p class="note-text">{{ content }}</p>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p class="empty-message">Записи в дневнике в данный момент отсутствуют.</p>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
