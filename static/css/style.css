@@ -1,90 +1,157 @@
-/* Общие настройки страницы */
+/* Глобальные настройки и базовая разметка */
 body {
     background-color: #121620;
     color: #e2e8f0;
     font-family: Arial, sans-serif;
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
-header, main {
+header {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px;
+    margin-bottom: 20px;
 }
 
 h1 {
     text-align: center;
     color: #ffffff;
-    margin-bottom: 30px;
+    margin: 10px 0 15px 0;
+    font-size: 24px;
 }
 
-/* Стилизация секций (контейнеров блоков) */
+/*  Элементы навигации */
+.navigation-menu {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background-color: #1a1f2c;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.nav-link {
+    color: #a0aec0;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #38bdf8;
+    background-color: #11151e;
+}
+
+/* Двухколоночный каркас страниц */
+
+.dashboard {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    align-items: stretch;
+}
+
 section {
     background-color: #1a1f2c;
     border-radius: 8px;
-    padding: 30px;
-    margin-bottom: 30px;
+    padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    flex: 1;
+}
+
+.stats-section, .notes-display-section {
+    flex: 1.4;
 }
 
 h2 {
     color: #38bdf8;
     border-left: 4px solid #38bdf8;
-    padding-left: 15px;
+    padding-left: 10px;
+    font-size: 18px;
     margin-top: 0;
 }
 
 h3 {
     color: #ffffff;
-    margin-top: 25px;
+    font-size: 15px;
+    margin: 15px 0 5px 0;
 }
 
-/* ИСПРАВЛЕНИЕ: Стилизация размера и расположения изображения */
+/*  Блок профиля (Главная страница) */
+
+.profile-header {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
 .profile-image {
-    display: block;
-    width: 180px;
-    height: 180px;
+    width: 90px;
+    height: 90px;
     object-fit: cover;
     border-radius: 50%;
-    border: 3px solid #38bdf8;
-    margin: 20px 0;
+    border: 2px solid #38bdf8;
+    flex-shrink: 0;
 }
 
-/* Списки */
-ul {
-    padding-left: 20px;
+.profile-desc {
+    font-size: 13px;
+    margin: 0;
+    color: #a0aec0;
 }
 
-li {
-    margin-bottom: 10px;
+.compact-list {
+    padding-left: 15px;
+    margin: 0;
+    font-size: 13px;
 }
 
-li strong {
+.compact-list li {
+    margin-bottom: 6px;
+}
+
+.compact-list strong {
     color: #38bdf8;
 }
 
-/* Стилизация таблицы (8 колонок х 4 строки с учетом header) */
+/* Таблица мониторинга успеваемости (Фиксированная сетка) */
+
 .table-container {
     overflow-x: auto;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     background-color: #11151e;
-    font-size: 14px;
+    font-size: 12px;
+    table-layout: fixed; /* Принудительно задает строгий расчет ширины колонок */
 }
 
 th, td {
-    padding: 12px 15px;
+    padding: 10px 8px;
     text-align: center;
+    vertical-align: middle; /* Центрирование текста по высоте ячейки */
     border: 1px solid #2d3748;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    color: #a0aec0;
 }
+
 
 th {
     background-color: #1e293b;
@@ -92,18 +159,118 @@ th {
     font-weight: 600;
 }
 
-td:first-child {
+/* Первая колонка под текстовые названия показателей */
+th:first-child, td:first-child {
+    width: 83px;
     text-align: left;
     background-color: #1e293b;
     color: #ffffff;
 }
 
-/* Подсветка заполненных данных */
-td {
+/* Все последующие 7 колонок для учебных тем */
+th:not(:first-child) {
+    width: 80px;
+}
+
+/* Подсветка содержательной части таблицы */
+tbody tr td:nth-child(2), 
+tbody tr td:nth-child(3),
+tbody tr td:nth-child(4) {
+    color: #e2e8f0;
+}
+
+/*    Форма добавления записей (Страница дневника) */
+
+.academic-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 13px;
     color: #a0aec0;
 }
 
-tbody tr td:nth-child(2), 
-tbody tr td:nth-child(3) {
+.academic-form input, .academic-form textarea {
+    background-color: #11151e;
+    border: 1px solid #2d3748;
+    border-radius: 4px;
     color: #e2e8f0;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+}
+
+.academic-form input:focus, .academic-form textarea:focus {
+    border-color: #38bdf8;
+    outline: none;
+}
+
+.submit-button {
+    background-color: #38bdf8;
+    color: #121620;
+    border: none;
+    border-radius: 4px;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #0ea5e9;
+}
+
+/*    Вывод хроники записей дневника */
+
+.notes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.note-card {
+    background-color: #11151e;
+    border: 1px solid #2d3748;
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.note-title {
+    color: #ffffff;
+    font-size: 15px;
+    margin: 0 0 8px 0;
+}
+
+.note-text {
+    color: #a0aec0;
+    font-size: 13px;
+    margin: 0;
+}
+
+.empty-message {
+    color: #a0aec0;
+    font-style: italic;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/*    Адаптивность (Мобильные экраны) */
+
+@media (max-width: 900px) {
+    .dashboard {
+        flex-direction: column;
+    }
 }
