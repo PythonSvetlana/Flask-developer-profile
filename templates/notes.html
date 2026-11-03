@@ -3,37 +3,49 @@
 {% block content %}
 <!-- Двухколоночный макет страницы дневника -->
 
-<!-- Левая колонка: Форма ввода (Пункт 04) -->
+<!-- Левая колонка: Форма ввода данных -->
 <section class="form-section">
     <h2>Добавление записи в дневник</h2>
     <form action="{{ url_for('notes') }}" method="POST" class="academic-form">
         <div class="form-group">
-            <label for="title">Заголовок записи:</label>
-            <input type="text" id="title" name="title" required placeholder="Введите тему заголовка...">
+            <label for="title">Заголовок записи (обязательно):</label>
+            <input type="text" id="title" name="title" required placeholder="Введите основную тему...">
+        </div>
+        
+        <!-- Пункт 05: Добавлено поле ввода подзаголовка -->
+        <div class="form-group">
+            <label for="subtitle">Подзаголовок записи (опционально):</label>
+            <input type="text" id="subtitle" name="subtitle" placeholder="Введите краткое пояснение или подтему...">
         </div>
         
         <div class="form-group">
-            <label for="content">Текст записи:</label>
-            <textarea id="content" name="content" rows="6" required placeholder="Опишите проделанную работу..."></textarea>
+            <label for="content">Текст записи (обязательно):</label>
+            <textarea id="content" name="content" rows="6" required placeholder="Опишите проделанную инженерную работу..."></textarea>
         </div>
         
-        <button type="submit" class="submit-button">Зафиксировать запись</button>
+        <button type="submit" class="submit-button">Сохранить в базу данных</button>
     </form>
 </section>
 
-<!-- Правая колонка: Вывод данных из словаря (Пункт 05) -->
+<!-- Правая колонка: Динамический вывод данных из СУБД -->
 <section class="notes-display-section">
     <h2>Хроника записей («Дневник программиста»)</h2>
     <div class="notes-container">
         {% if notes %}
-            {% for title, content in notes.items() %}
+            {% for note in notes %}
                 <article class="note-card">
-                    <h3 class="note-title">{{ title }}</h3>
-                    <p class="note-text">{{ content }}</p>
+                    <h3 class="note-title">{{ note.title }}</h3>
+                    <!-- Рендеринг подзаголовка, если он присутствует в БД -->
+                    {% if note.subtitle %}
+                        <h4 class="note-subtitle" style="color: #38bdf8; font-size: 13px; margin: -5px 0 8px 0; font-weight: normal; font-style: italic;">
+                            {{ note.subtitle }}
+                        </h4>
+                    {% endif %}
+                    <p class="note-text">{{ note.text }}</p>
                 </article>
             {% endfor %}
         {% else %}
-            <p class="empty-message">Записи в дневнике в данный момент отсутствуют.</p>
+            <p class="empty-message">Записи в репозитории базы данных отсутствуют.</p>
         {% endif %}
     </div>
 </section>

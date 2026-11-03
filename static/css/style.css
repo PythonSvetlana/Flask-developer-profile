@@ -26,7 +26,7 @@ h1 {
     font-size: 24px;
 }
 
-/*  Элементы навигации */
+/* Элементы навигации */
 .navigation-menu {
     display: flex;
     justify-content: center;
@@ -52,8 +52,7 @@ h1 {
     background-color: #11151e;
 }
 
-/* Двухколоночный каркас страниц */
-
+/*    Двухколоночный каркас страниц (Dashboard) */
 .dashboard {
     display: flex;
     gap: 20px;
@@ -88,8 +87,7 @@ h3 {
     margin: 15px 0 5px 0;
 }
 
-/*  Блок профиля (Главная страница) */
-
+/*    Блок профиля (Главная страница) */
 .profile-header {
     display: flex;
     gap: 15px;
@@ -126,8 +124,7 @@ h3 {
     color: #38bdf8;
 }
 
-/* Таблица мониторинга успеваемости (Фиксированная сетка) */
-
+/*    Таблица мониторинга успеваемости (Фиксированная сетка) */
 .table-container {
     overflow-x: auto;
     margin-top: 15px;
@@ -144,14 +141,13 @@ table {
 th, td {
     padding: 10px 8px;
     text-align: center;
-    vertical-align: middle; /* Центрирование текста по высоте ячейки */
+    vertical-align: middle; /* Выравнивание содержимого строго по центру высоты */
     border: 1px solid #2d3748;
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
-    color: #a0aec0;
+    color: #a0aec0; /* Базовый блеклый цвет для незаполненных ячеек */
 }
-
 
 th {
     background-color: #1e293b;
@@ -172,15 +168,12 @@ th:not(:first-child) {
     width: 80px;
 }
 
-/* Подсветка содержательной части таблицы */
-tbody tr td:nth-child(2), 
-tbody tr td:nth-child(3),
-tbody tr td:nth-child(4) {
-    color: #e2e8f0;
+/* ИСПРАВЛЕНО: Автоматическая яркая подсветка шрифта для всех выполненных модулей */
+td.completed-cell {
+    color: #e2e8f0 !important;
 }
 
 /*    Форма добавления записей (Страница дневника) */
-
 .academic-form {
     display: flex;
     flex-direction: column;
@@ -230,8 +223,7 @@ tbody tr td:nth-child(4) {
     background-color: #0ea5e9;
 }
 
-/*    Вывод хроники записей дневника */
-
+/*   Вывод хроники записей дневника */
 .notes-container {
     display: flex;
     flex-direction: column;
@@ -267,8 +259,7 @@ tbody tr td:nth-child(4) {
     margin-top: 20px;
 }
 
-/*    Адаптивность (Мобильные экраны) */
-
+/*   Адаптивность (Мобильные экраны) */
 @media (max-width: 900px) {
     .dashboard {
         flex-direction: column;
