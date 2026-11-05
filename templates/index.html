@@ -13,30 +13,41 @@
         <nav class="navigation-menu">
             <a href="{{ url_for('index') }}" class="nav-link">Главная (Профиль)</a>
             <a href="{{ url_for('notes') }}" class="nav-link">Дневник программиста</a>
+            {% if current_user.is_authenticated %}
+                 <span class="user-badge" style="color: #38bdf8; font-size: 14px; font-weight: bold; margin-left: auto; align-self: center; padding-right: 15px;">
+                    👤 {{ current_user.username }}
+                               </span>
+                <a href="{{ url_for('logout') }}" class="nav-link" style="color: #a0aec0;">Выйти</a>
+            {% endif %}
         </nav>
     </header>
 
     <main class="dashboard">
-        {% block content %}
-        
-        <!-- Левая колонка: Профиль разработчика -->
+        <!-- Левая колонка: Профессиональный профиль и Стек -->
         <section class="profile-section">
             <h2>Профессиональный профиль</h2>
             <div class="profile-header">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Фото профиля" class="profile-image">
                 <p class="profile-desc">Данный ресурс представляет собой структурированный отчет о процессе освоения технологий веб-разработки и построения серверной архитектуры.</p>
             </div>
-            
-            <h3>Технологический стек:</h3>
-            <ul class="compact-list">
-                <li><strong>Core Python:</strong> Оптимизированный код, структуры данных и базовые алгоритмы.</li>
-                <li><strong>Flask Framework:</strong> Развертывание микросервисов, маршрутизация и серверная логика.</li>
-                <li><strong>Frontend:</strong> Проектирование интерфейсов, адаптивная HTML5/CSS3 верстка.</li>
-                <li><strong>Git & GitHub:</strong> Контроль версий, фиксация коммитов и пулл-реквесты.</li>
+
+            <!-- Раздел стека технологий -->
+            <h3 style="margin-top: 20px; color: #38bdf8;">Технологический стек:</h3>
+            <ul class="tech-stack-list">
+                <li><strong style="color: #38bdf8;">Core Python:</strong> Оптимизированный код, структуры данных и базовые алгоритмы.</li>
+                <li><strong style="color: #38bdf8;">Flask Framework:</strong> Развертывание микросервисов, маршрутизация и серверная логика.</li>
+                <li><strong style="color: #38bdf8;">Frontend:</strong> Проектирование интерфейсов, адаптивная HTML5/CSS3 верстка.</li>
+                <li><strong style="color: #38bdf8;">Git & GitHub:</strong> Контроль версий, фиксация коммитов и пулл-реквесты.</li>
             </ul>
+
+            <!-- Раздел вывода токена -->
+            <h3 style="margin-top: 25px;">Ваш системный токен доступа:</h3>
+            <code style="color: #e2e8f0; background: #11151e; padding: 8px; border-radius: 4px; display: block; font-size: 11px; word-break: break-all; margin-top: 8px; border: 1px solid #2d3748;">
+                {{ current_user.token }}
+            </code>
         </section>
 
-        <!-- Правая колонка: Фиксированная таблица успеваемости -->
+        <!-- Правая колонка: Мониторинг успеваемости -->
         <section class="stats-section">
             <h2>Мониторинг успеваемости по дисциплинам</h2>
             <div class="table-container">
@@ -45,27 +56,23 @@
                         <tr>
                             <th>Показатель / Модуль</th>
                             {% for topic in topics %}
-                                <!-- Применение фильтра safe для активации тега <br> -->
                                 <th>{{ topic.name | safe }}</th>
                             {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Строка 1: Прогресс по лекциям -->
                         <tr>
                             <td><strong>% темы</strong></td>
                             {% for topic in topics %}
                                 <td class="{% if topic.status %}completed-cell{% endif %}">{{ topic.progress }}</td>
                             {% endfor %}
                         </tr>
-                        <!-- Строка 2: Прогресс по домашним работам -->
                         <tr>
                             <td><strong>% ДЗ</strong></td>
                             {% for topic in topics %}
                                 <td class="{% if topic.status %}completed-cell{% endif %}">{{ topic.hw }}</td>
                             {% endfor %}
                         </tr>
-                        <!-- Строка 3: Экспертные комментарии -->
                         <tr>
                             <td><strong>Комментарий</strong></td>
                             {% for topic in topics %}
@@ -76,8 +83,6 @@
                 </table>
             </div>
         </section>
-        
-        {% endblock %}
     </main>
 
 </body>

@@ -1,53 +1,73 @@
-{% extends 'index.html' %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дневник программиста</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
 
-{% block content %}
-<!-- Двухколоночный макет страницы дневника -->
+    <header>
+        <h1>Персональный блог-портфолио на Flask</h1>
+        <nav class="navigation-menu">
+            <a href="{{ url_for('index') }}" class="nav-link">Главная (Профиль)</a>
+            <a href="{{ url_for('notes') }}" class="nav-link">Дневник программиста</a>
+            {% if current_user.is_authenticated %}
+                <span class="user-badge" style="color: #38bdf8; font-size: 14px; font-weight: bold; margin-left: auto; align-self: center; padding-right: 15px;">
+                    👤 {{ current_user.username }}
+                </span>
+                <a href="{{ url_for('logout') }}" class="nav-link" style="color: #a0aec0;">Выйти</a>
+            {% endif %}
+        </nav>
+    </header>
 
-<!-- Левая колонка: Форма ввода данных -->
-<section class="form-section">
-    <h2>Добавление записи в дневник</h2>
-    <form action="{{ url_for('notes') }}" method="POST" class="academic-form">
-        <div class="form-group">
-            <label for="title">Заголовок записи (обязательно):</label>
-            <input type="text" id="title" name="title" required placeholder="Введите основную тему...">
-        </div>
-        
-        <!-- Пункт 05: Добавлено поле ввода подзаголовка -->
-        <div class="form-group">
-            <label for="subtitle">Подзаголовок записи (опционально):</label>
-            <input type="text" id="subtitle" name="subtitle" placeholder="Введите краткое пояснение или подтему...">
-        </div>
-        
-        <div class="form-group">
-            <label for="content">Текст записи (обязательно):</label>
-            <textarea id="content" name="content" rows="6" required placeholder="Опишите проделанную инженерную работу..."></textarea>
-        </div>
-        
-        <button type="submit" class="submit-button">Сохранить в базу данных</button>
-    </form>
-</section>
+    <main class="dashboard">
+        <!-- Левая колонка: Форма добавления (использует класс профиля для совпадения размеров) -->
+        <section class="profile-section">
+            <h2>Новая запись</h2>
+            <p class="profile-desc" style="margin-bottom: 20px;">Добавьте отчет о выполненных шагах разработки в базу данных.</p>
+            
+            <form action="{{ url_for('notes') }}" method="POST" class="academic-form" style="display: flex; flex-direction: column; gap: 12px;">
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 5px;">
+                    <label for="title" style="color: #38bdf8; font-size: 13px; font-weight: bold;">Заголовок:</label>
+                    <input type="text" id="title" name="title" required placeholder="Тема работы..." style="padding: 10px; background: #11151e; border: 1px solid #2d3748; color: #fff; border-radius: 4px; font-size: 14px;">
+                </div>
+                
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 5px;">
+                    <label for="subtitle" style="color: #38bdf8; font-size: 13px; font-weight: bold;">Подзаголовок:</label>
+                    <input type="text" id="subtitle" name="subtitle" placeholder="Краткое пояснение..." style="padding: 10px; background: #11151e; border: 1px solid #2d3748; color: #fff; border-radius: 4px; font-size: 14px;">
+                </div>
+                
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 5px;">
+                    <label for="content" style="color: #38bdf8; font-size: 13px; font-weight: bold;">Содержимое:</label>
+                    <textarea id="content" name="content" rows="5" required placeholder="Детали реализации..." style="padding: 10px; background: #11151e; border: 1px solid #2d3748; color: #fff; border-radius: 4px; font-size: 14px; resize: none;"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button" style="padding: 10px; background: #38bdf8; color: #11151e; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 5px;">Сохранить в СУБД</button>
+            </form>
+        </section>
 
-<!-- Правая колонка: Динамический вывод данных из СУБД -->
-<section class="notes-display-section">
-    <h2>Хроника записей («Дневник программиста»)</h2>
-    <div class="notes-container">
-        {% if notes %}
-            {% for note in notes %}
-                <article class="note-card">
-                    <h3 class="note-title">{{ note.title }}</h3>
-                    <!-- Рендеринг подзаголовка, если он присутствует в БД -->
-                    {% if note.subtitle %}
-                        <h4 class="note-subtitle" style="color: #38bdf8; font-size: 13px; margin: -5px 0 8px 0; font-weight: normal; font-style: italic;">
-                            {{ note.subtitle }}
-                        </h4>
-                    {% endif %}
-                    <p class="note-text">{{ note.text }}</p>
-                </article>
-            {% endfor %}
-        {% else %}
-            <p class="empty-message">Записи в репозитории базы данных отсутствуют.</p>
-        {% endif %}
-    </div>
-</section>
+        <!-- Правая колонка: Хроника (использует класс таблицы успеваемости) -->
+        <section class="stats-section">
+            <h2>Хроника записей («Дневник программиста»)</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px; max-height: 500px; overflow-y: auto; padding-right: 5px;">
+                {% if notes %}
+                    {% for note in notes %}
+                        <div style="background-color: #1a1f2c; padding: 25px; border-radius: 8px; border: 1px solid #2d3748;">
+                            <h3 style="color: #fff; margin: 0 0 5px 0; font-size: 18px;">{{ note.title }}</h3>
+                            {% if note.subtitle %}
+                                <h4 style="color: #38bdf8; margin: 0 0 12px 0; font-weight: normal; font-size: 14px;">{{ note.subtitle }}</h4>
+                            {% endif %}
+                            <p style="color: #a0aec0; margin: 0; line-height: 1.6; font-size: 14px;">{{ note.text }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p style="color: #a0aec0; font-style: italic; text-align: center; margin-top: 30px;">Записи в базе данных SQLite пока отсутствуют.</p>
+                {% endif %}
+            </div>
+        </section>
+    </main>
 
-{% endblock %}
+</body>
+</html>

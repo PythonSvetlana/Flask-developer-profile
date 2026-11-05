@@ -265,3 +265,20 @@ td.completed-cell {
         flex-direction: column;
     }
 }
+
+/* Стили для технологического стека */
+.tech-stack-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 10px;
+    text-align: left;
+    color: #a0aec0;
+    line-height: 1.6;
+    
+    /* Точная регулировка шрифта как в шапке */
+    font-size: 0.95rem; 
+}
+
+.tech-stack-list li {
+    margin-bottom: 8px;
+}

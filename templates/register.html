@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация профиля</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body style="justify-content: center;">
+    <div style="background-color: #1a1f2c; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); max-width: 400px; width: 100%;">
+        <h2 style="color: #38bdf8; border-left: 4px solid #38bdf8; padding-left: 10px; font-size: 18px; margin-bottom: 20px;">Регистрация</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div style="color: #ef4444; font-size: 13px; margin-bottom: 15px;">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('register') }}" method="POST" class="academic-form">
+            <div class="form-group">
+                <label for="username">Логин:</label>
+                <input type="text" id="username" name="username" required placeholder="Придумайте логин...">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="username@example.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required placeholder="Введите сложный пароль...">
+            </div>
+            <button type="submit" class="submit-button" style="margin-top: 10px;">Создать аккаунт</button>
+        </form>
+        <p style="font-size: 13px; color: #a0aec0; text-align: center; margin-top: 15px;">Уже зарегистрированы? <a href="{{ url_for('login') }}" style="color: #38bdf8; text-decoration: none;">Войти</a></p>
+    </div>
+</body>
+</html>
